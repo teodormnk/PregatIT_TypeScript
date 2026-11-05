@@ -1,0 +1,1 @@
+# PregatIT_TypeScript
