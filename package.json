@@ -20,9 +20,18 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node --test",
+    "check": "tsc --noEmit",
+    "ci": "npm run check && npm test"
   },
   "dependencies": {
     "typescript": "^7.0.2"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "devDependencies": {
+    "@types/node": "^24.19.2",
+    "typescript": "^6"
   }
 }
