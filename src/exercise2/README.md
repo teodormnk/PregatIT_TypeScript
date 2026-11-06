@@ -15,7 +15,7 @@ greet()          // "Hello, stranger!"
 1. `git switch main && git pull && git switch -c exercise-01`
 2. Copy `src/greet/greet.js` and `src/greet/greet.test.js` into your repository, same paths.
 3. Run `node --test`. Red. Good: now you know what "done" looks like.
-4. Open `../greet.js` and make the tests green. Only that file.
+4. Open `../greet.ts` and make the tests green. Only that file.
 5. Push, open a pull request called `ex01: greet`, ask a classmate to review it.
 
 ## Part 2 — the robot gets manners
