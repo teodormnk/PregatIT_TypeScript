@@ -22,11 +22,11 @@ export type Seating = {
 };
 
 /**
- * Cats are liquid: the box area must be at least 70% of the cat's area, => box.length * box.width >= (cat.width * cat.length) * 0.7
- * and the box's shorter side at least half the cat's width. => box.width >= cat.width / 2
+ * Cats are liquid: the box area must be at least 70% of the cat's area, => box.depth * box.width >= (cat.width * cat.length) * 0.7
+ * and the box's shorter side at least half the cat's width. => Math.min(box.width, box.depth) >= cat.width / 2
  */
 export function fits(cat: Cat, box: Box): boolean {
-    return (box.width * box.depth >= (cat.width * cat.length) * 0.7 && box.width >= (cat.width / 2));
+    return (box.width * box.depth >= (cat.width * cat.length) * 0.7 && Math.min(box.width, box.depth) >= (cat.width / 2));
 }
 
 /** The smallest box (by area) the cat fits in; the first one on a tie; null if none. */
