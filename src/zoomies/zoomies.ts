@@ -39,18 +39,19 @@ export function move(pos: Position, dir: Dir, steps = 1): Position
     E: [1, 0],
     W: [-1, 0]
   };
-  const newPos: Position = [pos[0] + directionDict[dir][0] * steps, pos[1] + directionDict[dir][1] * steps];
-  if(newPos[0] < 0 || newPos[1] < 0 || newPos[0] >= ROOM || newPos[1] >= ROOM)
-  {
-    throw new Error("Position indexes must be inside the bounds! (final position)")
-  }
+  const newPos: Position = [Math.max(0, Math.min(ROOM - 1, pos[0] + directionDict[dir][0] * steps)), Math.max(0, Math.min(ROOM - 1, pos[1] + directionDict[dir][1] * steps))]; //
+  // not respecting the test conditions
+  // if(newPos[0] < 0 || newPos[1] < 0 || newPos[0] >= ROOM || newPos[1] >= ROOM)
+  // {
+  //   throw new Error("Position indexes must be inside the bounds! (final position)")
+  // }
   return newPos;
   // I changed the method because the original one apparently was modifying the original value at incrementations/decrementations => not respecting the "const" condition => test failure
 }
 
 export function run(start: Position, dirs: Dir[]): Position[] {
   let result: Position[] = [];
-  result.push(start);
+  result.push([start[0], start[1]]);
   for(let direction of dirs){
     let lastPos: Position = result[result.length - 1]!; //"!" at the final of the assertion instruction insures that the assertion is non-null
     result.push(move(lastPos, direction));
@@ -68,7 +69,7 @@ export function farthest(start: Position, dirs: Dir[]): Position {
   let result: Position = start;
   let maxDist: number = 0;
   for(let direction of dirs) {
-    current = move(result, direction);
+    current = move(current, direction);
     if(distance(start, current) > maxDist) {
       maxDist = distance(start, current);
       result = current;

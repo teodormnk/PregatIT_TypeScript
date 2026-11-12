@@ -10,7 +10,6 @@ test("move: one step in each direction", () => {
 });
 
 test("move: throws when out of bounds", () => {
-  assert.throws(() => move([9, 9], "N"), { message: "Position indexes must be inside the bounds! (final position)" });
   assert.throws(() => move([-1, 9], "N"), { message: "Position indexes must be inside the bounds! (initial position)" });
 });
 
@@ -18,11 +17,11 @@ test("move: several steps", () => {
   assert.deepEqual(move([1, 1], "E", 3), [4, 1]);
 });
 
-// test("move: walls stop the cat", () => {
-//   assert.deepEqual(move([9, 9], "N"), [9, 9]);
-//   assert.deepEqual(move([0, 0], "W", 5), [0, 0]);
-//   assert.deepEqual(move([8, 2], "E", 5), [9, 2]);
-// });
+test("move: walls stop the cat", () => {
+  assert.deepEqual(move([9, 9], "N"), [9, 9]);
+  assert.deepEqual(move([0, 0], "W", 5), [0, 0]);
+  assert.deepEqual(move([8, 2], "E", 5), [9, 2]);
+});
 
 test("move: does not touch the position it got", () => {
   const p: Position = [1, 1];
