@@ -10,8 +10,8 @@ test("move: one step in each direction", () => {
 });
 
 test("move: throws when out of bounds", () => {
-  assert.throws(() => move([9, 9], "N"), { message: "Position indexes must be inside the bounds!" });
-  assert.throws(() => move([-1, 9], "N"), { message: "Position indexes must be inside the bounds!" });
+  assert.throws(() => move([9, 9], "N"), { message: "Position indexes must be inside the bounds! (final position)" });
+  assert.throws(() => move([-1, 9], "N"), { message: "Position indexes must be inside the bounds! (initial position)" });
 });
 
 test("move: several steps", () => {
