@@ -65,8 +65,8 @@ export function distance(a: Position, b: Position): number {
 }
 
 export function farthest(start: Position, dirs: Dir[]): Position {
-  let current: Position = start;
-  let result: Position = start;
+  let current: Position = [start[0], start[1]];
+  let result: Position = [start[0], start[1]];
   let maxDist: number = 0;
   for(let direction of dirs) {
     current = move(current, direction);
