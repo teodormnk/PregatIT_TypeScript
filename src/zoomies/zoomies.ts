@@ -79,7 +79,7 @@ export function farthest(start: Position, dirs: Dir[]): Position {
 }
 
 export function where(pos: Position, name?: string): string {
-  if(name === undefined)
+  if(!name)
   {
     return "the cat is at (" + pos[0] + ", " + pos[1] + ")";
   }
