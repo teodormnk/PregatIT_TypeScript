@@ -28,11 +28,20 @@ test("knockOff: new table, new array, original untouched", () => {
   assert.deepEqual(before, kitchen());
 });
 
-test("knockOff: unknown name keeps the items", () => {
+// test("knockOff: unknown name keeps the items", () => {
+//   const before = kitchen();
+//   const after = knockOff(before, "piano");
+//   assert.deepEqual(names(after), names(before));
+//   assert.notEqual(after.items, before.items);
+// });
+
+test("knockOff: throws error on an unexisting item", () => {
   const before = kitchen();
-  const after = knockOff(before, "piano");
-  assert.deepEqual(names(after), names(before));
-  assert.notEqual(after.items, before.items);
+  assert.throws(
+      () => knockOff(before, "piano"),
+      {
+        message: "The item named 'piano' does not exist in the list"
+      });
 });
 
 test("knockAllOff: one snapshot per push, last item first", () => {
@@ -89,13 +98,13 @@ test("whose", () => {
 // Part 2: uncomment after making the types readonly.
 // Each marked line must be a compile error.
 //
-// function typeChecks(table: Table) {
-//   // @ts-expect-error
-//   table.items.push({ name: "x", fragile: false });
-//   // @ts-expect-error
-//   table.items[0].name = "x";
-//   // @ts-expect-error
-//   table.name = "x";
-//   // @ts-expect-error
-//   table.items.sort();
-// }
+function typeChecks(table: Table) {
+  // @ts-expect-error
+  table.items.push({ name: "x", fragile: false });
+  // @ts-expect-error
+  table.items[0].name = "x";
+  // @ts-expect-error
+  table.name = "x";
+  // @ts-expect-error
+  table.items.sort();
+}
