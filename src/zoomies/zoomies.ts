@@ -39,7 +39,10 @@ export function move(pos: Position, dir: Dir, steps = 1): Position
     E: [1, 0],
     W: [-1, 0]
   };
-  const newPos: Position = [Math.max(0, Math.min(ROOM - 1, pos[0] + directionDict[dir][0] * steps)), Math.max(0, Math.min(ROOM - 1, pos[1] + directionDict[dir][1] * steps))]; //
+  const newPos: Position = [
+      Math.max(0, Math.min(ROOM - 1, pos[0] + directionDict[dir][0] * steps)),
+    Math.max(0, Math.min(ROOM - 1, pos[1] + directionDict[dir][1] * steps))
+  ];
   // not respecting the test conditions
   // if(newPos[0] < 0 || newPos[1] < 0 || newPos[0] >= ROOM || newPos[1] >= ROOM)
   // {
