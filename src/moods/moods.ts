@@ -9,6 +9,10 @@ export type CatEvent = { kind: "fed"; grams: number}
   | { kind: "ignored"}
   | { kind: "vacuum"};
 
+function exhaustive(value: never): never {
+  throw new Error("Mood '" + value + "' is not supported! (exhaustive check)");
+}
+
 export function sound(mood: Mood): string {
   switch(mood) {
     case "hungry":
@@ -20,7 +24,7 @@ export function sound(mood: Mood): string {
     case "grumpy":
       return "hiss";
     default:
-      throw new Error("Mood '" + mood + "' is not supported! (sound)");
+      exhaustive(mood);
   }
 }
 
@@ -54,7 +58,7 @@ export function day(start: Mood, events: CatEvent[]): Mood[] {
   const moods: Mood[] = [];
   for(const event of events) {
     current = next(current, event); // takes the current mood and applies the event,
-    moods.push(current); // and then pushes the current mood after the event as occured
+    moods.push(current); // and then pushes the current mood after the event occures
   }
   return moods;
 }

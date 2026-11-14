@@ -10,7 +10,7 @@ test("sound", () => {
 });
 
 test("sound: throw error", () =>{
-  assert.throws( () => {sound("scratchy" as Mood)}, { message: "Mood 'scratchy' is not supported! (sound)"});
+  assert.throws( () => {sound("scratchy" as Mood)}, { message: "Mood 'scratchy' is not supported! (exhaustive check)"});
 });
 
 test("fed", () => {
@@ -57,10 +57,6 @@ test("day: nothing happened", () => {
 test("parseMood", () => {
   assert.equal(parseMood("grumpy"), "grumpy");
   assert.equal(parseMood("  Sleepy "), "sleepy");
-  // assert.equal(parseMood("happy"), null);
-  // assert.equal(parseMood(42), null);
-  // assert.equal(parseMood(null), null);
-  // assert.equal(parseMood(undefined), null);
   // adapted to error throwing techniques
 });
 
