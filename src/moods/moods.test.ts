@@ -1,12 +1,16 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { sound, next, day, parseMood } from "./moods.ts";
+import { sound, next, day, parseMood, type Mood } from "./moods.ts";
 
 test("sound", () => {
   assert.equal(sound("sleepy"), "purr");
   assert.equal(sound("hungry"), "MEOW");
   assert.equal(sound("playful"), "chirp");
   assert.equal(sound("grumpy"), "hiss");
+});
+
+test("sound: throw error", () =>{
+  assert.throws( () => {sound("scratchy" as Mood)}, { message: "Mood 'scratchy' is not supported! (sound)"});
 });
 
 test("fed", () => {
@@ -53,10 +57,27 @@ test("day: nothing happened", () => {
 test("parseMood", () => {
   assert.equal(parseMood("grumpy"), "grumpy");
   assert.equal(parseMood("  Sleepy "), "sleepy");
-  assert.equal(parseMood("happy"), null);
-  assert.equal(parseMood(42), null);
-  assert.equal(parseMood(null), null);
-  assert.equal(parseMood(undefined), null);
+  // assert.equal(parseMood("happy"), null);
+  // assert.equal(parseMood(42), null);
+  // assert.equal(parseMood(null), null);
+  // assert.equal(parseMood(undefined), null);
+  // adapted to error throwing techniques
+});
+
+test("parseMood: error throw - other string 1", () => {
+  assert.throws(() => {parseMood("happy")}, {message: "Mood 'happy' is not supported! (parseMood)"});
+});
+
+test("parseMood: error throw - other string 2", () => {
+  assert.throws(() => {parseMood(42)}, {message: "Mood '42' is not supported! (parseMood param type check)"});
+});
+
+test("parseMood: error throw - null entry", () => {
+  assert.throws(() => {parseMood(null)}, {message: "Mood 'null' is not supported! (parseMood param type check)"});
+});
+
+test("parseMood: error throw - undefined entry", () => {
+  assert.throws(() => {parseMood(undefined)}, {message: "Mood 'undefined' is not supported! (parseMood param type check)"});
 });
 
 // Not called. tsc checks that each marked line is an error.
