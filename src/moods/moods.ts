@@ -28,28 +28,30 @@ export function sound(mood: Mood): string {
   }
 }
 
-export function next(mood: Mood, event: CatEvent): Mood {
+export function next(mood: Mood, event: CatEvent): Mood{
   switch(event.kind) {
     case "fed":
       if(event.grams >= 50) {
-        return "sleepy" as Mood;
+        return "sleepy";
       }
-      return "hungry" as Mood;
+      return "hungry";
     case "petted":
       if(mood === "grumpy") {
         return mood;
       }
       if(event.seconds <= 3) {
-        return "playful" as Mood;
+        return "playful";
       }
-      return "grumpy" as Mood;
+      return "grumpy";
     case "ignored":
       if(mood === "playful") {
-        return "grumpy" as Mood;
+        return "grumpy";
       }
       return mood;
     case "vacuum":
-      return "grumpy" as Mood;
+      return "grumpy";
+    default:
+      throw new Error("The event is not supported!");
   }
 }
 

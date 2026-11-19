@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { sound, next, day, parseMood, type Mood } from "./moods.ts";
+import {sound, next, day, parseMood, type Mood, type CatEvent} from "./moods.ts";
 
 test("sound", () => {
   assert.equal(sound("sleepy"), "purr");
@@ -38,6 +38,10 @@ test("ignored", () => {
 test("vacuum", () => {
   assert.equal(next("sleepy", { kind: "vacuum" }), "grumpy");
   assert.equal(next("playful", { kind: "vacuum" }), "grumpy");
+});
+
+test("lazy", () => {
+  assert.throws(() => {next("sleepy", {kind: "lazy"} as unknown as CatEvent)}, {message: "The event is not supported!"});
 });
 
 test("day", () => {
