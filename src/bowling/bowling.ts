@@ -15,7 +15,6 @@ export function score(rolls: number[]): number {
         } else if(first + second === 10) {
             score += first + second + third;
             rollCount+=2;
-            continue;
         } else {
             score += first + second;
             rollCount+=2;
