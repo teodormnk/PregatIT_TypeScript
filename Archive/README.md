@@ -18,7 +18,7 @@ For each one it finds where your value sits among real web pages: the quantile, 
 score = 100 - 5 * (3 * qDom + 2 * qRequests + qSize) / 6
 ```
 
-In `src/ecoindex/ecoindex.ts` write the types `Page` and `Grade`, then:
+In `../src/ecoindex` write the types `Page` and `Grade`, then:
 
 - `quantile(table, value)` - find the first border bigger than the value. The answer is the bucket number (starting at 0) plus how far into the bucket the value is. `quantile(DOM, 61)` is `1.5`: bucket 1 goes from 47 to 75 and 61 is halfway. Bigger than every border: 20.
 - `ecoIndex(page)` - the formula above, with the three tables from the file.
