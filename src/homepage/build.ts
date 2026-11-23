@@ -8,7 +8,7 @@ const out = "dist";
 const colors = ["#f4a261", "#2a9d8f", "#e76f51", "#457b9d", "#e9c46a", "#8d99ae"];
 
 function color(cat: Cat): string {
-  return colors[cat.id % colors.length];
+  return colors[cat.id % colors.length]?? "#000";
 }
 
 // every cat gets its own picture file

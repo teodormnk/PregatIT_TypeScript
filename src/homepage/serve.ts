@@ -15,7 +15,7 @@ const types: Record<string, string> = {
 };
 
 const server = createServer(async (req, res) => {
-  let path = (req.url ?? "/").split("?")[0];
+  let path = (req.url ?? "/").split("?")[0] ?? "/";
   if (path.endsWith("/")) path += "index.html";
   const file = join(root, normalize(path));
 
