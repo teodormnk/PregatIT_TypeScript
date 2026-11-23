@@ -5,6 +5,14 @@ import { DOM, quantile, ecoIndex, grade, type Grade, type Page } from "./ecoinde
 function close(actual: number, expected: number) {
   assert.ok(Math.abs(actual - expected) < 0.01, `got ${actual}, expected ${expected}`);
 }
+// "The measuring grid needs to have numbers!"
+test("quantile: needs to be greater than zero", () => {
+  assert.throws(() => quantile(DOM, -7), {message: "Value must be greater than zero!"});
+});
+
+test("quantile: given table has 0 elements", () => {
+  assert.throws(() => quantile([], 47), {message: "The measuring grid needs to have numbers!"});
+});
 
 test("quantile: the lightest value is 0", () => {
   close(quantile(DOM, 0), 0);

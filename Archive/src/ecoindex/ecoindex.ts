@@ -14,7 +14,23 @@ export type Page = {};
 export type Grade = string;
 
 export function quantile(table: number[], value: number): number {
-  throw new Error("TODO quantile");
+  if(table.length === 0){
+    throw new Error("The measuring grid needs to have numbers!")
+  }
+  if(value < 0) {
+    throw new Error("Value must be greater than zero!");
+  }
+  if(value === 0) {
+    return 0;
+  }
+
+  for(let border of table) {
+    let nextBorder: number = table[table.indexOf(border) + 1]??0;
+    if(border <= value && value < nextBorder) {
+      return table.indexOf(border) + (value - border) / (nextBorder - border);
+    }
+  }
+  return table.length - 1;
 }
 
 export function ecoIndex(page: Page): number {
