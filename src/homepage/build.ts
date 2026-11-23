@@ -7,17 +7,12 @@ import { cats, type Cat } from "./cats.ts";
 const out = "dist";
 const colors = ["#f4a261", "#2a9d8f", "#e76f51", "#457b9d", "#e9c46a", "#8d99ae"];
 
-function color(cat: Cat): string {
-  return colors[cat.id % colors.length]?? "#000";
-}
-
 // every cat gets its own picture file
-function picture(cat: Cat): string {
+function picture(color: string): string {
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <!-- picture of ${cat.name}, generated ${new Date().toISOString()} -->
-  <polygon points="10,26 16,4 30,18" fill="${color(cat)}"/>
-  <polygon points="54,26 48,4 34,18" fill="${color(cat)}"/>
-  <circle cx="32" cy="36" r="24" fill="${color(cat)}"/>
+  <polygon points="10,26 16,4 30,18" fill="${color}"/>
+  <polygon points="54,26 48,4 34,18" fill="${color}"/>
+  <circle cx="32" cy="36" r="24" fill="${color}"/>
   <circle cx="23" cy="32" r="4" fill="#222"/>
   <circle cx="41" cy="32" r="4" fill="#222"/>
   <polygon points="29,40 35,40 32,44" fill="#222"/>
@@ -46,7 +41,7 @@ function card(cat: Cat): string {
         <div class="cat-card-inner">
           <div class="cat-card-header">
             <div class="cat-card-header-picture">
-              <img src="img/cat-${cat.id}.svg" alt="${cat.name}" width="64" height="64">
+              <img src="img/cat-${cat.id % colors.length}.svg" alt="${cat.name}" width="64" height="64">
             </div>
             <div class="cat-card-header-title">
               <h3 class="cat-card-header-title-text"><span>${cat.name}</span></h3>
@@ -66,9 +61,9 @@ mkdirSync(`${out}/img`, { recursive: true });
 mkdirSync(`${out}/css`, { recursive: true });
 
 writeFileSync(`${out}/css/style.css`, styles());
-for (const cat of cats) {
-  writeFileSync(`${out}/img/cat-${cat.id}.svg`, picture(cat));
-}
+colors.forEach((cat: string, index: number) => {
+  writeFileSync(`${out}/img/cat-${index}.svg`, picture(cat));
+});
 
 const html = `<!doctype html>
 <html lang="en">
