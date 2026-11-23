@@ -24,36 +24,23 @@ function picture(color: string): string {
 // and its own stylesheet
 function styles(): string {
   const cardColors = colors.map((color: string, index: number) => `
-  .color-${index} .cat-card-header-title-text { color: ${color}; }
-  .color-${index} .cat-card-inner { border-color: ${color}; }`).join("");
+  .color-${index} h3 { color: ${color}; }
+  .color-${index} { border-color: ${color}; }`).join("");
 
   return `
   body { font-family: sans-serif; margin: 24px; }
-  .cat-card-inner { border: 2px solid; border-radius: 8px; padding: 8px; margin: 8px; width: 260px; float: left; height: 150px; }
-  .cat-card-body-naps-value { font-weight: bold; }
+  .card { border: 2px solid; border-radius: 8px; padding: 8px; margin: 8px; width: 260px; float: left; height: 150px; }
   ${cardColors}`;
 }
 
 function card(cat: Cat): string {
   return `
-    <div class="cat-wrapper color-${cat.id % colors.length}">
-      <div class="cat-card">
-        <div class="cat-card-inner">
-          <div class="cat-card-header">
-            <div class="cat-card-header-picture">
-              <img src="img/cat-${cat.id % colors.length}.svg" alt="${cat.name}" width="64" height="64">
-            </div>
-            <div class="cat-card-header-title">
-              <h3 class="cat-card-header-title-text"><span>${cat.name}</span></h3>
-            </div>
-          </div>
-          <div class="cat-card-body">
-            <div class="cat-card-body-quirk"><p><span>${cat.quirk}</span></p></div>
-            <div class="cat-card-body-naps"><p><span>naps: </span><span class="cat-card-body-naps-value">${cat.naps}</span><span> hours a day</span></p></div>
-          </div>
-        </div>
-      </div>
-    </div>`;
+    <article class="card color-${cat.id % colors.length}">
+        <img src="img/cat-${cat.id % colors.length}.svg" alt="${cat.name}" width="64" height="64">
+        <h3>${cat.name}</h3>
+        <p>${cat.quirk}</p>
+        <p>naps: <b>${cat.naps}</b> hours a day</p>
+    </article>`;
 }
 
 rmSync(out, { recursive: true, force: true });
@@ -73,11 +60,8 @@ const html = `<!doctype html>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <div class="page">
-    <div class="page-header"><h1>The cats</h1></div>
-    <div class="page-content">${cats.map(card).join("")}
-    </div>
-  </div>
+  <h1>The cats</h1>
+  ${cats.map(card).join("")}
 </body>
 </html>
 `;
