@@ -27,19 +27,23 @@ function picture(cat: Cat): string {
 }
 
 // and its own stylesheet
-function style(cat: Cat): string {
-  return `/* styles for ${cat.name} */
-.cat-${cat.id} .cat-card-header-title-text { color: ${color(cat)}; }
-.cat-${cat.id} .cat-card-inner { border-color: ${color(cat)}; }
-.cat-${cat.id} .cat-card-body-naps-value { font-weight: bold; }
-`;
+function styles(): string {
+  const cardColors = colors.map((color: string, index: number) => `
+  .color-${index} .cat-card-header-title-text { color: ${color}; }
+  .color-${index} .cat-card-inner { border-color: ${color}; }`).join("");
+
+  return `
+  body { font-family: sans-serif; margin: 24px; }
+  .cat-card-inner { border: 2px solid; border-radius: 8px; padding: 8px; margin: 8px; width: 260px; float: left; height: 150px; }
+  .cat-card-body-naps-value { font-weight: bold; }
+  ${cardColors}`;
 }
 
 function card(cat: Cat): string {
   return `
-    <div class="cat-wrapper cat-${cat.id}">
+    <div class="cat-wrapper color-${cat.id % colors.length}">
       <div class="cat-card">
-        <div class="cat-card-inner" style="border: 2px solid; border-radius: 8px; padding: 8px; margin: 8px; width: 260px; float: left; height: 150px;">
+        <div class="cat-card-inner">
           <div class="cat-card-header">
             <div class="cat-card-header-picture">
               <img src="img/cat-${cat.id}.svg" alt="${cat.name}" width="64" height="64">
@@ -61,9 +65,9 @@ rmSync(out, { recursive: true, force: true });
 mkdirSync(`${out}/img`, { recursive: true });
 mkdirSync(`${out}/css`, { recursive: true });
 
+writeFileSync(`${out}/css/style.css`, styles());
 for (const cat of cats) {
   writeFileSync(`${out}/img/cat-${cat.id}.svg`, picture(cat));
-  writeFileSync(`${out}/css/cat-${cat.id}.css`, style(cat));
 }
 
 const html = `<!doctype html>
@@ -71,8 +75,7 @@ const html = `<!doctype html>
 <head>
   <meta charset="utf-8">
   <title>The cats</title>
-  <style>body { font-family: sans-serif; margin: 24px; }</style>
-${cats.map((cat) => `  <link rel="stylesheet" href="css/cat-${cat.id}.css">`).join("\n")}
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <div class="page">
