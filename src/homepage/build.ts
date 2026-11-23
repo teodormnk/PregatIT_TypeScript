@@ -30,6 +30,8 @@ function styles(): string {
   return `
   body { font-family: sans-serif; margin: 24px; }
   .card { border: 2px solid; border-radius: 8px; padding: 8px; margin: 8px; width: 260px; float: left; height: 150px; }
+  nav { clear: both; padding-top: 16px; }
+  nav a { margin-right: 8px; }
   ${cardColors}`;
 }
 
@@ -52,19 +54,52 @@ colors.forEach((cat: string, index: number) => {
   writeFileSync(`${out}/img/cat-${index}.svg`, picture(cat));
 });
 
-const html = `<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>The cats</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-  <h1>The cats</h1>
-  ${cats.map(card).join("")}
-</body>
-</html>
-`;
+// const html = `<!doctype html>
+// <html lang="en">
+// <head>
+//   <meta charset="utf-8">
+//   <title>The cats</title>
+//     <link rel="stylesheet" href="css/style.css">
+// </head>
+// <body>
+//   <h1>The cats</h1>
+//   ${cats.map(card).join("")}
+// </body>
+// </html>
+// `;
+// writeFileSync(`${out}/index.html`, html);
+// console.log(`${cats.length} cats in ${out}/`);
 
-writeFileSync(`${out}/index.html`, html);
-console.log(`${cats.length} cats in ${out}/`);
+const pageSize = 24;
+const totalPages = Math.ceil(cats.length / pageSize);
+
+function pageFile(page: number): string {
+  return page === 1 ? "index.html" : `page-${page}.html`;
+}
+
+function pagination(current: number): string {
+  const links = Array.from({ length: totalPages }, (_, i) => {
+    const p = i + 1;
+    return p === current ? `<b>${p}</b>` : `<a href="${pageFile(p)}">${p}</a>`;
+  }).join(" ");
+  return `<nav>Page: ${links}</nav>`;
+}
+
+for (let page = 1; page <= totalPages; page++) {
+  const slice = cats.slice((page - 1) * pageSize, page * pageSize);
+  const html = `<!doctype html>
+                    <html lang="en">
+                        <head>
+                            <meta charset="utf-8">
+                            <title>The cats (page ${page})</title>
+                            <link rel="stylesheet" href="css/style.css">
+                        </head>
+                        <body>
+                            <h1>The cats</h1>
+                            ${slice.map(card).join("")}
+                            ${pagination(page)}
+                        </body>
+                    </html>`;
+  writeFileSync(`${out}/${pageFile(page)}`, html);
+}
+console.log(`${cats.length} cats across ${totalPages} pages in ${out}/`);
