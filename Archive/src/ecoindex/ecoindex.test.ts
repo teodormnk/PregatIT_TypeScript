@@ -51,8 +51,16 @@ test("ecoIndex: the median page", () => {
 
 test("grade", () => {
   assert.equal(grade(90), "A");
+  assert.equal(grade(79), "B");
   assert.equal(grade(60), "C");
+  assert.equal(grade(45), "D");
+  assert.equal(grade(30), "E");
+  assert.equal(grade(15), "F");
   assert.equal(grade(5), "G");
+});
+
+test("grade: negative score", () => {
+  assert.throws(() => grade(-3), {message: "The ecoIndex score must be greater than zero!"});
 });
 
 // never called, tsc checks it

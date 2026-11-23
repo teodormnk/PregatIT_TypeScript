@@ -7,11 +7,13 @@ export const DOM = [0, 47, 75, 159, 233, 298, 358, 417, 476, 537, 603, 674, 753,
 export const REQUESTS = [0, 2, 15, 25, 34, 42, 49, 56, 63, 70, 78, 86, 95, 105, 117, 130, 147, 170, 205, 281, 3920];
 export const SIZE_KB = [0, 1.37, 144.7, 319.53, 479.46, 631.97, 783.38, 937.91, 1098.62, 1265.47, 1448.32, 1648.27, 1876.08, 2142.06, 2465.37, 2866.31, 3401.59, 4155.73, 5400.08, 8037.54, 223212.26];
 
-// TODO: dom, requests, sizeKb
-export type Page = {};
+export type Page = {
+  dom: number;
+  requests: number;
+  sizeKb: number;
+};
 
-// TODO: "A" to "G"
-export type Grade = string;
+export type Grade = "A" | "B" | "C" | "D" | "E" | "F" | "G";
 
 export function quantile(table: number[], value: number): number {
   if(table.length === 0){
@@ -34,9 +36,34 @@ export function quantile(table: number[], value: number): number {
 }
 
 export function ecoIndex(page: Page): number {
-  throw new Error("TODO ecoIndex");
+    let domQuantile: number = quantile(DOM, page.dom);
+    let reqQuantile: number = quantile(REQUESTS, page.requests);
+    let sizeQuantile: number = quantile(SIZE_KB, page.sizeKb);
+    let index: number = 100 - 5 * (3 * domQuantile + 2 * reqQuantile + sizeQuantile) / 6;
+    return index;
 }
 
 export function grade(score: number): Grade {
-  throw new Error("TODO grade");
+  if(score < 0) {
+    throw new Error("The ecoIndex score must be greater than zero!");
+  }
+  if(score > 80){
+    return "A";
+  }
+  if(score > 70){
+    return "B";
+  }
+  if(score > 55){
+    return "C";
+  }
+  if(score > 40){
+    return "D";
+  }
+  if(score > 25){
+    return "E";
+  }
+  if(score > 10){
+    return "F";
+  }
+  return "G";
 }
