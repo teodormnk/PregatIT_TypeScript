@@ -106,7 +106,7 @@ function compileTimeChecks(): void {
   shoebox.width = 31;
 
   // @ts-expect-error bestBox may return null; .width is not safe without a check
-  bestBox(blu, [shoebox]).width;
+  const box: number = bestBox(blu, [shoebox]).width;
 
   // @ts-expect-error a string is not a width
   fits(blu, { width: "30", depth: 20 });

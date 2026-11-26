@@ -99,12 +99,12 @@ test("whose", () => {
 // Each marked line must be a compile error.
 //
 function typeChecks(table: Table) {
-  // @ts-expect-error
+  // @ts-expect-error aaa
   table.items.push({ name: "x", fragile: false });
-  // @ts-expect-error
+  // @ts-expect-error aaa
   table.items[0].name = "x";
-  // @ts-expect-error
+  // @ts-expect-error aaa
   table.name = "x";
-  // @ts-expect-error
+  // @ts-expect-error aaa
   table.items.sort();
 }

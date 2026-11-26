@@ -53,10 +53,10 @@ export function move(pos: Position, dir: Dir, steps = 1): Position
 }
 
 export function run(start: Position, dirs: Dir[]): Position[] {
-  let result: Position[] = [];
+  const result: Position[] = [];
   result.push([start[0], start[1]]);
-  for(let direction of dirs){
-    let lastPos: Position = result[result.length - 1]!; //"!" at the final of the assertion instruction insures that the assertion is non-null
+  for(const direction of dirs){
+    const lastPos: Position = result[result.length - 1]!; //"!" at the final of the assertion instruction insures that the assertion is non-null
     result.push(move(lastPos, direction));
   }
   return result;
@@ -71,7 +71,7 @@ export function farthest(start: Position, dirs: Dir[]): Position {
   let current: Position = [start[0], start[1]];
   let result: Position = [start[0], start[1]];
   let maxDist: number = 0;
-  for(let direction of dirs) {
+  for(const direction of dirs) {
     current = move(current, direction);
     if(distance(start, current) > maxDist) {
       maxDist = distance(start, current);
