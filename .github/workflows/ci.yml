@@ -29,3 +29,20 @@ jobs:
       - run: npm ci
       - run: npm run check
       - run: npm test
+  greenit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - run: node src/homepage/build.ts
+      - run: node src/homepage/serve.ts &
+      - run: timeout 30 sh -c 'until curl -sf http://localhost:8080 > /dev/null; do sleep 1; done'
+
+      - uses: ythirion/greenit-analysis-action@v0.1.2
+        with:
+          url-file: greenit-urls.yaml
+          min-ecoindex: '75'
+          timezone: Europe/Bucharest
