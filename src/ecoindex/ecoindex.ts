@@ -26,8 +26,8 @@ export function quantile(table: number[], value: number): number {
     return 0;
   }
 
-  for(let border of table) {
-    let nextBorder: number = table[table.indexOf(border) + 1]??0;
+  for(const border of table) {
+    const nextBorder: number = table[table.indexOf(border) + 1]??0;
     if(border <= value && value < nextBorder) {
       return table.indexOf(border) + (value - border) / (nextBorder - border);
     }
@@ -36,10 +36,10 @@ export function quantile(table: number[], value: number): number {
 }
 
 export function ecoIndex(page: Page): number {
-    let domQuantile: number = quantile(DOM, page.dom);
-    let reqQuantile: number = quantile(REQUESTS, page.requests);
-    let sizeQuantile: number = quantile(SIZE_KB, page.sizeKb);
-    let index: number = 100 - 5 * (3 * domQuantile + 2 * reqQuantile + sizeQuantile) / 6;
+    const domQuantile: number = quantile(DOM, page.dom);
+    const reqQuantile: number = quantile(REQUESTS, page.requests);
+    const sizeQuantile: number = quantile(SIZE_KB, page.sizeKb);
+    const index: number = 100 - 5 * (3 * domQuantile + 2 * reqQuantile + sizeQuantile) / 6;
     return index;
 }
 

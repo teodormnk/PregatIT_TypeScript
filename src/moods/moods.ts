@@ -69,7 +69,7 @@ export function parseMood(input: unknown): Mood | null {
   if(typeof input !== "string") {
     throw new Error("Mood '" + input as Mood + "' is not supported! (parseMood param type check)");
   }
-  let inputString: string = input.trim().toLowerCase();
+  const inputString: string = input.trim().toLowerCase();
   switch(inputString as Mood) {
     case "hungry":
     case "sleepy":

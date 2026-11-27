@@ -25,9 +25,9 @@ export function knockOff(table: Table, name: string): Table {
   //   pos++;
   // }
   // const result = {name: copyName, items: copyItems};
-  let items: Item[] = [];
-  let tabName: string = table.name;
-  let initialList: readonly Item[] = table.items;
+  const items: Item[] = [];
+  const tabName: string = table.name;
+  const initialList: readonly Item[] = table.items;
   for(const item of table.items) {
     if(item.name !== name) {
       items.push(item);
@@ -40,9 +40,9 @@ export function knockOff(table: Table, name: string): Table {
 }
 
 export function knockAllOff(table: Table): Table[] {
-  let items: readonly Item[] = table.items;
-  let tabName: string = table.name;
-  let tabList: Table[] = [];
+  const items: readonly Item[] = table.items;
+  const tabName: string = table.name;
+  const tabList: Table[] = [];
   let copyTable: Table = {name: tabName, items: items};
   for(const item of [...table.items].reverse()) { // because the test expects the knocking-off procedure to work from the tail to the head
     copyTable = knockOff(copyTable, item.name);
@@ -52,9 +52,9 @@ export function knockAllOff(table: Table): Table[] {
 }
 
 export function rename(table: Table, from: string, to: string): Table {
-  let items: Item[] = [];
-  let tabName: string = table.name;
-  for(let item of table.items) {
+  const items: Item[] = [];
+  const tabName: string = table.name;
+  for(const item of table.items) {
     if(item.name === from) {
       items.push({name: to, fragile: item.fragile, owner: item.owner});
     } else {
@@ -65,8 +65,8 @@ export function rename(table: Table, from: string, to: string): Table {
 }
 
 export function broken(before: Table, after: Table): string[] {
-  let brokenList: string[] = [];
-  for(let itemB of before.items) {
+  const brokenList: string[] = [];
+  for(const itemB of before.items) {
     if(itemB.fragile && !after.items.some((itemA) => itemA.name === itemB.name)) { // ambda which iterates with the itemA variable through the items array and compares each one of them with itemB
       brokenList.push(itemB.name);
     }

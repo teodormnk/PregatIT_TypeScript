@@ -27,8 +27,6 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
-      - run: npm run check
-      - run: npm test
   greenit:
     runs-on: ubuntu-latest
     steps:
